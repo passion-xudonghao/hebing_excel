@@ -30,6 +30,24 @@ function handleFileUpload(event) {
             // 为每个文件数据新增一个字段“数据类型”，设置为文件名
             jsonData.forEach(row => {
                 row['品牌分类'] = file.name;
+				
+				// 从订单日期字段中提取年月日并新增为一个新的"日期"字段
+				    if (row['添加日期']) {
+				        const dateValue = new Date(row['添加日期']); // 将订单日期转为 Date 对象
+				
+				        // 格式化为 YYYY-MM-DD 格式
+				        const year = dateValue.getFullYear();
+				        const month = (dateValue.getMonth() + 1).toString().padStart(2, '0'); // 月份从 0 开始，所以要加 1，并确保两位数格式
+				        const day = dateValue.getDate().toString().padStart(2, '0'); // 确保日期两位数格式
+				
+				        const formattedDate = `${year}-${month}-${day}`; // 组合成 YYYY-MM-DD 格式
+				
+				        // 添加新的字段"日期"
+				        row['日期'] = formattedDate;
+				    } else {
+				        // 如果没有时间信息，可以设置为空或者默认值
+				        row['日期'] = '无时间信息';
+				    }
             });
 
             // 将处理后的数据存储到全局数组
@@ -54,8 +72,8 @@ function mergeExcelFiles() {
 
     // 创建一个新的工作簿
     const newWorkbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(newWorkbook, worksheet, '合并后的数据');
+    XLSX.utils.book_append_sheet(newWorkbook, worksheet, 'ALL_TABLE');
 
     // 导出Excel文件
-    XLSX.writeFile(newWorkbook, '合并后的数据.xlsx');
+    XLSX.writeFile(newWorkbook, 'ALL_TABLE.xlsx');
 }
