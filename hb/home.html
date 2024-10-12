@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel 文件上传与合并</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <h1>上传并合并Excel文件</h1>
+    <input type="file" id="fileInput" multiple>
+    <button onclick="mergeExcelFiles()">合并文件并导出</button>
+    <div id="output"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
